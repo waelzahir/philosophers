@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:19:56 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/05 18:39:27 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/06 20:51:21 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int main(int	ac, char	**av)
 			return (0);
 		if (init_data(philos, av + 1) == 0)
 			return (free(philos), 0);
+			philosophers(philos);
 	}
 	else
 		{

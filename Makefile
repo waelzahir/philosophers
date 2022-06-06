@@ -4,7 +4,7 @@ NAME = philo
 HEADER = philosophers.h
 MAIN = main.c
 
-SRC = utils.c evals.c exit_func.c
+SRC = utils.c evals.c exit_func.c philosophers.c
 
 OBJ = $(SRC:.c=.o)
 
