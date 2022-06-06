@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:19:56 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/04 22:54:04 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/05 18:39:27 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@ void	connect_mutexes(t_philos *philos, int n)
 {
 	int i;
 
-	i = 1;
-	while (i < n - 1)
+	i = 0;
+	while (i < (n - 1))
 	{
 		philos[i].right_f = &philos[i + 1].left_f;
 		i++;
 	}
-	philos[0].right_f = &philos[n - 1].left_f;
 	philos[n - 1].right_f = &philos[0].left_f;
 
 }
@@ -37,21 +36,9 @@ int init_mutexes(t_philos *philos)
 		i++;
 	}
 	connect_mutexes(philos, philos[0].n_ph);
-	i = 0;
-	while (i < philos[0].n_ph)
-	{
-		printf("philo %d , left fork %p \n", philos[i].rank , &philos[i].left_f);
-		i++;
-	}
-	printf("\n\n\n");
-	i = 0;
-	while (i <philos[0].n_ph)
-	{
-		printf("philo %d , right fork %p \n", philos[i].rank , philos[i].right_f);
-		i++;
-	}
 	return (0);
 }
+
 int init_data(t_philos *philos, char	**args)
 {
 	int	n_ph;
@@ -74,9 +61,9 @@ int init_data(t_philos *philos, char	**args)
 			philos[i].eating = ft_atoi(args[4]);
 		i++;
 	}
-	init_mutexes(philos);
+	if (mutexes_destroy(philos, init_mutexes(philos)))
+		return (0);
 	return 1;
-
 }
 int main(int	ac, char	**av)
 {
@@ -90,7 +77,7 @@ int main(int	ac, char	**av)
 			return (0);
 		philos = malloc((ft_atoi(av[1])) * sizeof(t_philos));
 		if (!philos)
-			return (free(philos), 0);
+			return (0);
 		if (init_data(philos, av + 1) == 0)
 			return (free(philos), 0);
 	}
