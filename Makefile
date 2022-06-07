@@ -1,5 +1,5 @@
 CC = gcc
-#FLAGS = -Wall -Wextra -Werror -pthread
+FLAGS = -lpthread -g
 NAME = philo
 HEADER = philosophers.h
 MAIN = main.c

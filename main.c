@@ -6,36 +6,34 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:19:56 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/06 20:51:21 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 17:52:04 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-void	connect_mutexes(t_philos *philos, int n)
-{
-	int i;
 
-	i = 0;
-	while (i < (n - 1))
-	{
-		philos[i].right_f = &philos[i + 1].left_f;
-		i++;
-	}
-	philos[n - 1].right_f = &philos[0].left_f;
-
-}
 int init_mutexes(t_philos *philos)
 {
 	int i;
+	t_mutexes *mutexes;
 
+	mutexes = malloc(sizeof(t_mutexes));
+	if (!mutexes)
+		return (philos[0].rank);
 	i = 0;
 	while (i < philos[0].n_ph)
 	{
-		if (pthread_mutex_init(&philos[i].left_f, NULL) == -1)
+		philos[i].mutexes = mutexes;
+
+		if (pthread_mutex_init(&mutexes->mutex, NULL) == -1)
 			return (philos[i].rank);
+		if ((i + 1) == philos[0].n_ph)
+			break ;
+		mutexes->next = malloc(sizeof(t_mutexes));
+		mutexes = mutexes->next;
 		i++;
 	}
-	connect_mutexes(philos, philos[0].n_ph);
+	mutexes->next = philos[0].mutexes;
 	return (0);
 }
 
@@ -51,7 +49,7 @@ int init_data(t_philos *philos, char	**args)
 	while(i < n_ph)
 	{
 		philos[i].n_ph  = n_ph;
-		philos[i].rank = i + 1;
+		philos[i].rank = i;
 		philos[i].death = ft_atoi(args[1]);
 		philos[i].eat =ft_atoi(args[2]);
 		philos[i].sleep = ft_atoi(args[3]);
@@ -61,8 +59,9 @@ int init_data(t_philos *philos, char	**args)
 			philos[i].eating = ft_atoi(args[4]);
 		i++;
 	}
-	if (mutexes_destroy(philos, init_mutexes(philos)))
-		return (0);
+	init_mutexes(philos);
+	// if (mutexes_destroy(philos, init_mutexes(philos)))
+	// 	return (0);
 	return 1;
 }
 int main(int	ac, char	**av)
@@ -80,6 +79,7 @@ int main(int	ac, char	**av)
 			return (0);
 		if (init_data(philos, av + 1) == 0)
 			return (free(philos), 0);
+
 			philosophers(philos);
 	}
 	else

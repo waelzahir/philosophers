@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:12:19 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/06 20:53:45 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 17:34:16 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,22 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/time.h>
+typedef struct s_mutexes
+{
+	pthread_mutex_t mutex;
+	struct s_mutexes *next;
+} t_mutexes ;
 
 typedef struct s_philos
 {
-	pthread_t	*thread;
+	pthread_t	thread;
 	int	n_ph;
 	int rank;
 	int death;
 	int eat;
 	int sleep;
 	int eating;
-	pthread_mutex_t *right_f;
-	pthread_mutex_t left_f;
-
+	t_mutexes *mutexes;
 } t_philos ;
 
 
@@ -41,7 +44,7 @@ int	input_eval(char **av);
 int	ft_strlen(const char *s);
 int mutexes_destroy(t_philos *philos, int rank);
 void	philosophers(t_philos *philo);
-void	*routine(t_philos philos);
+void	*routine(void *i);
 void	eating(t_philos philo);
 
 #endif
