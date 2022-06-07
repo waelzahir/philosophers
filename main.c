@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:19:56 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/07 17:52:04 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 21:28:54 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int init_data(t_philos *philos, char	**args)
 	while(i < n_ph)
 	{
 		philos[i].n_ph  = n_ph;
+		philos[i].stamp = what_time();
+		philos[i].stamp_u = what_time();
 		philos[i].rank = i;
 		philos[i].death = ft_atoi(args[1]);
 		philos[i].eat =ft_atoi(args[2]);

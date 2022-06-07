@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:24:23 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/07 17:50:40 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 21:29:25 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,24 @@
 
 void	sleeping(t_philos philo)
 {
-	printf("%d sleeping\n", philo.rank);
+	printf("%lu %d sleeping\n", (what_time() - philo.stamp),philo.rank + 1);
 	usleep(philo.sleep * 1000);
 }
 void	thinking(t_philos philo)
 {
-	printf("%d is thinking\n", philo.rank);
+	printf("%lu %d is thinking\n",(what_time() - philo.stamp), philo.rank + 1);
 }
 void	eating(t_philos philo)
 {
-
 	pthread_mutex_lock(&philo.mutexes->mutex);
-	printf("%d has taken a left fork\n", philo.rank);
-		pthread_mutex_lock(&philo.mutexes->next->mutex);
-	printf("%d has taken a right  fork\n", philo.rank);
-	printf("%d is eating\n", philo.rank);
+	printf("%lu %d has taken a left fork\n", (what_time() - philo.stamp), philo.rank + 1);
+	pthread_mutex_lock(&philo.mutexes->next->mutex);
+	printf("%lu %d has taken a right fork\n",(what_time() - philo.stamp), philo.rank + 1) ;
+	printf("%lu %d is eating\n",(what_time() - philo.stamp), philo.rank + 1);
 	usleep(philo.eat * 1000);
-
-
+	philo.stamp_u = what_time();
 	pthread_mutex_unlock(&philo.mutexes->mutex);
-	printf("%d left unlocked\n", philo.rank);
-		pthread_mutex_unlock(&philo.mutexes->next->mutex);
-	printf("%d right unlocked\n", philo.rank);
+	pthread_mutex_unlock(&philo.mutexes->next->mutex);
 
 }
 void	*routine(void *phil)
@@ -50,7 +46,6 @@ void	*routine(void *phil)
 	else if (philo[0].eating == -1)
 		while (1)
 		{
-
 			eating(philo[0]);
 			sleeping(philo[0]);
 			thinking(philo[0]);
@@ -72,6 +67,7 @@ void	philosophers(t_philos *philo)
 	i = 0;
 	while (i < philo[0].n_ph)
 	{
+
 		pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
 		i++;
 	}

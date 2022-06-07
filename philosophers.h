@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:12:19 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/07 17:34:16 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 21:28:27 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ typedef struct s_philos
 {
 	pthread_t	thread;
 	int	n_ph;
+	long stamp;
+	long stamp_u;
 	int rank;
-	int death;
-	int eat;
-	int sleep;
+	long death;
+	long eat;
+	long sleep;
 	int eating;
 	t_mutexes *mutexes;
 } t_philos ;
@@ -46,5 +48,6 @@ int mutexes_destroy(t_philos *philos, int rank);
 void	philosophers(t_philos *philo);
 void	*routine(void *i);
 void	eating(t_philos philo);
+long	what_time();
 
 #endif

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozahir <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:07:50 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/03 15:08:02 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 21:10:05 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "philosophers.h"
 static	int	my_isspace(int c)
 {
 	if (c == ' '
@@ -58,4 +59,12 @@ int	ft_strlen(const char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+long	what_time()
+{
+	struct timeval tv;
+
+	gettimeofday(&tv , NULL);
+	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
