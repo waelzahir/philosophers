@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/05 18:24:23 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/07 21:29:25 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/07 21:43:42 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,39 @@ void	*routine(void *phil)
 		}
 		return NULL;
 }
-void	philosophers(t_philos *philo)
+void	*watcher_g(void	*phil)
 {
+	t_philos *philos;
 	int i;
 
 	i = 0;
-	while (i < philo[0].n_ph)
+	philos = phil;
+	while (i < philos[0].n_ph)
 	{
+		printf("rank %d \n", philos[i].rank + 1);
+		i++;
+	}
+	return NULL;
 
-		pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
-		i++;
-	}
+}
+void	philosophers(t_philos *philo)
+{
+	int i;
+	pthread_t	watcher;
+
 	i = 0;
-	while (i < philo[0].n_ph)
-	{
-		pthread_join(philo[i].thread,NULL);
-		i++;
-	}
+	// while (i < philo[0].n_ph)
+	// {
+
+	// 	pthread_create(&philo[i].thread, NULL, &routine, &philo[i]);
+	// 	i++;
+	// }
+	pthread_create(&watcher, NULL, &watcher_g, philo);
+	// i = 0;
+	// while (i < philo[0].n_ph)
+	// {
+	// 	pthread_join(philo[i].thread,NULL);
+	// 	i++;
+	// }
+	pthread_join(watcher, NULL);
 }
