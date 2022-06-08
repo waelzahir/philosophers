@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:19:56 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/07 21:28:54 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/08 17:22:59 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int init_data(t_philos *philos, char	**args)
 int main(int	ac, char	**av)
 {
 	t_philos	*philos;
+	int res;
 
 	if (ac >= 5 && ac <= 6)
 	{
@@ -82,7 +83,10 @@ int main(int	ac, char	**av)
 		if (init_data(philos, av + 1) == 0)
 			return (free(philos), 0);
 
-			philosophers(philos);
+			res = philosophers(philos);
+			if (res >= 0)
+				printf("%ld %d died\n", (what_time() - philos[0].stamp), res + 1);
+
 	}
 	else
 		{

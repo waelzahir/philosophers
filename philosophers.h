@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:12:19 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/07 21:28:27 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/08 17:19:21 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philos
 	pthread_t	thread;
 	int	n_ph;
 	long stamp;
-	long stamp_u;
+	long  stamp_u;
 	int rank;
 	long death;
 	long eat;
@@ -45,9 +45,9 @@ int	ft_atoi(const char *str);
 int	input_eval(char **av);
 int	ft_strlen(const char *s);
 int mutexes_destroy(t_philos *philos, int rank);
-void	philosophers(t_philos *philo);
+int	philosophers(t_philos *philo);
 void	*routine(void *i);
-void	eating(t_philos philo);
+void	eating(t_philos *philo);
 long	what_time();
 
 #endif
