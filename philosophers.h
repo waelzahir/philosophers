@@ -6,7 +6,7 @@
 /*   By: ozahir <ozahir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 15:12:19 by ozahir            #+#    #+#             */
-/*   Updated: 2022/06/08 17:19:21 by ozahir           ###   ########.fr       */
+/*   Updated: 2022/06/09 16:03:33 by ozahir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 typedef struct s_mutexes
 {
 	pthread_mutex_t mutex;
+	pthread_mutex_t print;
+	int i;
 	struct s_mutexes *next;
 } t_mutexes ;
 
@@ -49,5 +51,6 @@ int	philosophers(t_philos *philo);
 void	*routine(void *i);
 void	eating(t_philos *philo);
 long	what_time();
+void free_data(t_philos *philos);
 
 #endif

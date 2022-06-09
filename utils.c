@@ -11,7 +11,8 @@
 /* ************************************************************************** */
 
 #include "philosophers.h"
-static	int	my_isspace(int c)
+
+static int	my_isspace(int c)
 {
 	if (c == ' '
 		|| c == '\f'
@@ -61,10 +62,10 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-long	what_time()
+long	what_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
-	gettimeofday(&tv , NULL);
+	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
