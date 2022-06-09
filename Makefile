@@ -1,10 +1,10 @@
 CC = gcc
-FLAGS = -lpthread
+FLAGS = -Wall -Wextra -Werror -lpthread
 NAME = philo
-HEADER = philosophers.h
-MAIN = main.c
+HEADER = mandatory/philosophers.h
+MAIN = mandatory/main.c
 
-SRC = utils.c evals.c exit_func.c philosophers.c
+SRC = mandatory/utils.c mandatory/evals.c mandatory/exit_func.c mandatory/philosophers.c mandatory/routine.c
 
 OBJ = $(SRC:.c=.o)
 
